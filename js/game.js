@@ -6,24 +6,38 @@ class Game {
     this.height = 600;
     this.fps = 60;
     this.framesCounter = 0;
+    this.playerKeys = {
+      TOP_KEY: 38,
+      SPACE: 32
+    };
   }
 
-  init(){
+  init() {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.start();
   }
 
-  start(){
+  start() {
     this.reset();
-    this.drawAll();    
+    this.drawAll();
   }
 
-  reset(){
+  reset() {
     this.background = new Background(this.ctx, this.width, this.height);
+    this.player = new Player(
+      this.ctx,
+      50,
+      50,
+      "images/bb82.png",
+      this.width,
+      this.height,
+      this.playerKeys
+    );
   }
 
-  drawAll(){
+  drawAll() {
     this.background.draw();
+    this.player.draw();
   }
 }
