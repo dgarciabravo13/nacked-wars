@@ -8,8 +8,10 @@ class Player {
     this.posX = 50;
     this.posY = gameHeight * 0.98 - this.height;
     this.speed = 2;
+    this.speedlight = 0.5;
     this.keys = keys;
     this.setListeners();
+    this.arrKeys = [];
   }
 
   draw() {
@@ -24,16 +26,38 @@ class Player {
 
   setListeners() {
     document.addEventListener("keydown", e => {
-      if (e.keyCode === this.keys.UP) {
-          this.posY -= this.speed;
-      } else if (e.keyCode === this.keys.DOWN) {
-          this.posY += this.speed;
-      } else if (e.keyCode === this.keys.RIGHT) {
-          this.posX += this.speed;
-      } else if (e.keyCode === this.keys.LEFT) {
-          this.posX -= this.speed;
-      }
-
+      this.arrKeys[e.keyCode] = e.keyCode;
+      if(this.arrKeys[this.keys.UP] && this.arrKeys[this.keys.SPACE]){
+        this.posY -= this.speed;
+        this.speed += this.speedlight;
+      }else if(this.arrKeys[this.keys.DOWN] && this.arrKeys[this.keys.SPACE]){
+        this.posY += this.speed;
+        this.speed += this.speedlight;
+      }else if(this.arrKeys[this.keys.LEFT] && this.arrKeys[this.keys.SPACE]){
+        this.posX -= this.speed;
+        this.speed += this.speedlight;
+      }else if(this.arrKeys[this.keys.RIGHT] && this.arrKeys[this.keys.SPACE]){
+        this.posX += this.speed;
+        this.speed += this.speedlight;
+      }else if(this.arrKeys[this.keys.UP]){
+        this.posY -= this.speed;  
+      }else if(this.arrKeys[this.keys.DOWN]){
+        this.posY += this.speed; 
+      }else if(this.arrKeys[this.keys.LEFT]){
+        this.posX -= this.speed; 
+      }else if(this.arrKeys[this.keys.RIGHT]){
+        this.posX += this.speed; 
+      }   
+    });
+    document.addEventListener("keyup", e => {
+      
+      if(this.arrKeys[this.keys.UP] || this.arrKeys[this.keys.DOWN] || this.arrKeys[this.keys.LEFT] || this.arrKeys.RIGHT){
+        this.speed = 2;
+        this.arrKeys = [];
+    }else if(this.arrKeys[this.keys.SPACE]){
+      this.speed = 2;
+    }
+      
     });
   }
 }
