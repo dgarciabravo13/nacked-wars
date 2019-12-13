@@ -6,24 +6,44 @@ class Game {
     this.height = 600;
     this.fps = 60;
     this.framesCounter = 0;
+    this.playerKeys = {
+      UP: 38,
+      DOWN: 40,
+      LEFT: 37,
+      RIGHT: 39,
+      SPACE: 32
+    };
   }
 
-  init(){
+  init() {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.start();
   }
 
-  start(){
+  start() {
     this.reset();
-    this.drawAll();    
   }
 
-  reset(){
+  reset() {
     this.background = new Background(this.ctx, this.width, this.height);
+    this.player = new Player(
+      this.ctx,
+      50,
+      50,
+      "images/bb82.png",
+      this.width,
+      this.height,
+      this.playerKeys
+    );
   }
 
-  drawAll(){
+  clear(){
+    this.ctx.clearRect(0,0,this.width,this.height);
+  }
+
+  drawAll() {
     this.background.draw();
+    this.player.draw();
   }
 }
