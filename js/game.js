@@ -7,7 +7,10 @@ class Game {
     this.fps = 60;
     this.framesCounter = 0;
     this.playerKeys = {
-      TOP_KEY: 38,
+      UP: 38,
+      DOWN: 40,
+      LEFT: 37,
+      RIGHT: 39,
       SPACE: 32
     };
   }
@@ -20,7 +23,6 @@ class Game {
 
   start() {
     this.reset();
-    this.drawAll();
   }
 
   reset() {
@@ -34,6 +36,10 @@ class Game {
       this.height,
       this.playerKeys
     );
+  }
+
+  clear(){
+    this.ctx.clearRect(0,0,this.width,this.height);
   }
 
   drawAll() {
