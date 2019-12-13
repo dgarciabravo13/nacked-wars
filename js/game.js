@@ -36,6 +36,7 @@ class Game {
       this.height,
       this.playerKeys
     );
+    this.mist = new Mist(this.ctx,45,45);
   }
 
   clear(){

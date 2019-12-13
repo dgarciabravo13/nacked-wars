@@ -5,7 +5,7 @@ class Player {
     this.height = height;
     this.image = new Image();
     this.image.src = image;
-    this.posX = 50;
+    this.posX = gameWidth * 0.08 - this.width;
     this.posY = gameHeight * 0.98 - this.height;
     this.speed = 2;
     this.speedlight = 0.5;
