@@ -1,23 +1,25 @@
 class Mist{
-  constructor(ctx, width, height){
+  constructor(ctx, width, height,board){
     this.ctx = ctx;
     this.width = width;
     this.height = height;
+    this.board = board;
     this.posX = 50;
     this.posY = 50;
   }
 
-  generateMist(){
-    this.ctx.fillStyle = 'black';
-    this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
+  veil(x,y,width,height){
+    this.ctx.fillRect(x,y,width,height);
   }
+  draw(board){
 
-  draw(){
-    for(let i=1; i<9; i++){
-      for(let j=1; j<9; j++){
-        this.generateMist(this.posX*i,this.poxY*j,this.width,this.height);
-        console.log("pintame");
+    for(let i=0;i<20;i++){
+      for(let j=0;j<12;j++){
+        let element = board[j][i]
+        if(element){
+          this.veil(this.posX*i,this.posY*j,this.width,this.height)
+        }
       }
-    }  
-  }
+    }
+  }  
 }

@@ -2,7 +2,7 @@ class Game {
   constructor() {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
-    this.width = 1100;
+    this.width = 1000;
     this.height = 600;
     this.fps = 60;
     this.framesCounter = 0;
@@ -13,6 +13,20 @@ class Game {
       RIGHT: 39,
       SPACE: 32
     };
+    this.board = [
+      [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1]
+    ]
   }
 
   init() {
@@ -23,6 +37,13 @@ class Game {
 
   start() {
     this.reset();
+    function step(timestamp){
+      this.clear();
+      this.drawAll();
+      //this.moveAll();
+      window.requestAnimationFrame(step.bind(this));
+    }
+    window.requestAnimationFrame(step.bind(this));
   }
 
   reset() {
@@ -34,9 +55,10 @@ class Game {
       "images/bb82.png",
       this.width,
       this.height,
-      this.playerKeys
+      this.playerKeys,
+      this.board
     );
-    this.mist = new Mist(this.ctx,45,45);
+    this.mist = new Mist(this.ctx,45,45,this.board);
   }
 
   clear(){
@@ -45,6 +67,12 @@ class Game {
 
   drawAll() {
     this.background.draw();
+    this.mist.draw(this.board);
     this.player.draw();
+
   }
+
+  // moveAll() {
+  //   this.player.clearBoard(this.board);
+  // }
 }
