@@ -17,11 +17,12 @@ class Player {
   clearBoard() {
    let x = Math.floor(this.posX/50)
    let y = Math.floor(this.posY/50)
-    console.log(this.board[y][x]);
-    console.log("position posX ==>>",this.posX);
-    console.log("position poxY ==>>",this.posY);
-    console.log("posicion X ==>>",x);
-    console.log("posicion Y ==>>",y);
+    // console.log(this.board[y][x]);
+    // console.log("position posX ==>>",this.posX);
+    // console.log("position poxY ==>>",this.posY);
+    // console.log("posicion X ==>>",x);
+    // console.log("posicion Y ==>>",y);
+    this.board[y][x] = 0;
   }
 
   draw() {
