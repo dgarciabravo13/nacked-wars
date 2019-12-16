@@ -15,8 +15,8 @@ class Player {
     this.arrKeys = [];
   }
   clearBoard() {
-   let x = Math.floor(this.posX/50)
-   let y = Math.floor(this.posY/50)
+   let x = Math.round(this.posX/50)
+   let y = Math.round(this.posY/50)
     // console.log(this.board[y][x]);
     // console.log("position posX ==>>",this.posX);
     // console.log("position poxY ==>>",this.posY);

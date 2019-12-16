@@ -14,19 +14,19 @@ class Game {
       SPACE: 32
     };
     this.board = [
-      [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1]
-    ]
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    ];
   }
 
   init() {
@@ -37,10 +37,11 @@ class Game {
 
   start() {
     this.reset();
-    function step(timestamp){
+    function step(timestamp) {
       this.clear();
       this.drawAll();
       //this.moveAll();
+      this.colision();
       window.requestAnimationFrame(step.bind(this));
     }
     window.requestAnimationFrame(step.bind(this));
@@ -58,20 +59,37 @@ class Game {
       this.playerKeys,
       this.board
     );
-    this.mist = new Mist(this.ctx,45,45,this.board);
+    this.mist = new Mist(this.ctx, 45, 45, this.board);
+    this.enemy = new Enemy(
+      this.ctx,
+      200,
+      200,
+      "images/grievous.png",
+      this.width,
+      this.height
+    );
   }
 
-  clear(){
-    this.ctx.clearRect(0,0,this.width,this.height);
+  clear() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
   }
 
   drawAll() {
     this.background.draw();
     this.mist.draw(this.board);
     this.player.draw();
-
+    this.enemy.draw();
   }
-
+  colision() {
+    if (
+      this.player.posX + this.player.width > this.enemy.posX &&
+      this.enemy.posX + this.enemy.width > this.player.posX &&
+      this.player.posY + this.player.height > this.enemy.posY &&
+      this.enemy.posY + this.enemy.height > this.player.posY
+    ) {
+      console.log("toque");
+    }
+  }
   // moveAll() {
   //   this.player.clearBoard(this.board);
   // }
