@@ -14,19 +14,20 @@ class Game {
       SPACE: 32
     };
     this.board = [
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ];
+    this.reqId;
   }
 
   init() {
@@ -38,13 +39,15 @@ class Game {
   start() {
     this.reset();
     function step(timestamp) {
+      this.framesCounter++;
       this.clear();
       this.drawAll();
-      //this.moveAll();
+      this.moveAll();
       this.colision();
-      window.requestAnimationFrame(step.bind(this));
+      if (this.framesCounter > 1000) this.framesCounter = 0;
+      this.reqId = window.requestAnimationFrame(step.bind(this));
     }
-    window.requestAnimationFrame(step.bind(this));
+    this.reqId = window.requestAnimationFrame(step.bind(this));
   }
 
   reset() {
@@ -59,7 +62,7 @@ class Game {
       this.playerKeys,
       this.board
     );
-    this.mist = new Mist(this.ctx, 45, 45, this.board);
+    this.mist = new Mist(this.ctx, 45, 45, this.board, this.veilCounter);
     this.enemy = new Enemy(
       this.ctx,
       200,
@@ -87,10 +90,23 @@ class Game {
       this.player.posY + this.player.height > this.enemy.posY &&
       this.enemy.posY + this.enemy.height > this.player.posY
     ) {
-      console.log("toque");
+      this.gameOver();
     }
   }
-  // moveAll() {
-  //   this.player.clearBoard(this.board);
+  moveAll() {
+    this.enemy.move(this.framesCounter);
+  }
+
+  gameOver() {
+    //alert("a tomar por culo");
+    console.log("hola");
+    // this.reqId = window.requestAnimationFrame(function(){});
+    //  while(this.reqId--){
+    //   window.cancelAnimationFrame(this.reqId);
+    // }
+    window.cancelAnimationFrame(this.reqId);
+    // }
+  }
+  // winner(){
   // }
 }

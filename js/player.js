@@ -7,7 +7,7 @@ class Player {
     this.image.src = image;
     this.posX = gameWidth * 0.08 - this.width;
     this.posY = gameHeight * 0.98 - this.height;
-    this.speed = 2;
+    this.speed = 3;
     this.speedlight = 0.5;
     this.keys = keys;
     this.board = board;
@@ -44,6 +44,7 @@ class Player {
         }else {
           this.posY -= this.speed;
           this.speed += this.speedlight;
+          this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.DOWN] && this.arrKeys[this.keys.SPACE]){
         if(this.posY >= 550){
@@ -51,6 +52,7 @@ class Player {
         }else {
           this.posY += this.speed;
           this.speed += this.speedlight;
+          this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.LEFT] && this.arrKeys[this.keys.SPACE]){
         if (this.posX <= 0){
@@ -58,6 +60,7 @@ class Player {
         }else {
           this.posX -= this.speed;
           this.speed += this.speedlight;
+          this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.RIGHT] && this.arrKeys[this.keys.SPACE]){
         if (this.posX >= 950){
@@ -65,6 +68,7 @@ class Player {
         } else {
           this.posX += this.speed;
           this.speed += this.speedlight;
+          this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.UP]){
         if(this.posY <= 0){
@@ -97,7 +101,7 @@ class Player {
       }   
     });
     document.addEventListener("keyup", e => {
-        this.speed = 2;
+        this.speed = 3;
         this.arrKeys = [];
     });
   }
