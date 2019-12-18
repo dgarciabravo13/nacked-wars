@@ -51,6 +51,7 @@ class Game {
         this.moveAll();
         this.colision();
         this.winner();
+        this.score();
         if (this.framesCounter > 1000) this.framesCounter = 0;
         this.reqId = window.requestAnimationFrame(step.bind(this));
       }
@@ -133,7 +134,7 @@ class Game {
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, 1000, 600);
       this.ctx.save();
-      this.ctx.font = "40px Star Jedi Rounded";
+      this.ctx.font = "40px StarJedi";
       this.ctx.strokeStyle = "yellow";
       this.ctx.strokeText("congratulation!", 330, 200);
       this.ctx.strokeText("you are a Jedi master!", 250, 250);
@@ -143,5 +144,11 @@ class Game {
       window.cancelAnimationFrame(this.reqId);
       this.continueAnimating = false;
     }
+  }
+  score(){
+    let total = this.board.reduce(function(a,b) {
+      return a.concat(b);
+    }).filter(function(a){ return a === 0; }).length;
+    document.getElementById("score").innerHTML ="score:" + total;
   }
 }
