@@ -14,40 +14,49 @@ class Game {
       SPACE: 32
     };
     this.board = [
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ];
     this.reqId;
+    this.continueAnimating = true;
   }
 
   init() {
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.start();
+    var startBtn = document.getElementById("start-button");
+    startBtn.onclick = function() {
+      startBtn.blur();
+    };
   }
 
   start() {
     this.reset();
     function step(timestamp) {
-      this.framesCounter++;
-      this.clear();
-      this.drawAll();
-      this.moveAll();
-      this.colision();
-      if (this.framesCounter > 1000) this.framesCounter = 0;
-      this.reqId = window.requestAnimationFrame(step.bind(this));
+      if (this.continueAnimating) {
+        this.framesCounter++;
+        this.clear();
+        this.drawAll();
+        this.moveAll();
+        this.colision();
+        this.winner();
+        if (this.framesCounter > 1000) this.framesCounter = 0;
+        this.reqId = window.requestAnimationFrame(step.bind(this));
+      }
     }
-    this.reqId = window.requestAnimationFrame(step.bind(this));
+    if (this.continueAnimating)
+      this.reqId = window.requestAnimationFrame(step.bind(this));
   }
 
   reset() {
@@ -98,15 +107,41 @@ class Game {
   }
 
   gameOver() {
-    //alert("a tomar por culo");
-    console.log("hola");
-    // this.reqId = window.requestAnimationFrame(function(){});
-    //  while(this.reqId--){
-    //   window.cancelAnimationFrame(this.reqId);
-    // }
-    window.cancelAnimationFrame(this.reqId);
+    console.log("you lose");
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, 1000, 600);
+    this.ctx.save();
+    this.ctx.font = "40px StarJedi";
+    this.ctx.strokeStyle = "yellow";
+    this.ctx.strokeText("you have a merge conflict?", 150, 200);
+    this.ctx.strokeText("git push and", 300, 250);
+    this.ctx.strokeText("may the --force be with you", 150, 300);
+    this.ctx.restore(), window.cancelAnimationFrame(this.reqId);
+    this.continueAnimating = false;
     // }
   }
-  // winner(){
-  // }
+  winner() {
+    let total = this.board
+      .reduce(function(a, b) {
+        return a.concat(b);
+      })
+      .some(function(a) {
+        return a;
+      });
+    if (!total) {
+      console.log("you win");
+      this.ctx.fillStyle = "black";
+      this.ctx.fillRect(0, 0, 1000, 600);
+      this.ctx.save();
+      this.ctx.font = "40px Star Jedi Rounded";
+      this.ctx.strokeStyle = "yellow";
+      this.ctx.strokeText("congratulation!", 330, 200);
+      this.ctx.strokeText("you are a Jedi master!", 250, 250);
+      this.ctx.strokeText("...develop, perhaps?", 275, 300);
+      this.ctx.restore(), window.cancelAnimationFrame(this.reqId);
+      this.continueAnimating = false;
+      window.cancelAnimationFrame(this.reqId);
+      this.continueAnimating = false;
+    }
+  }
 }

@@ -9,6 +9,7 @@ class Mist{
   }
 
   veil(x,y,width,height){
+    this.ctx.fillStyle="#5D6D7E";
     this.ctx.fillRect(x,y,width,height);
   }
   draw(board){

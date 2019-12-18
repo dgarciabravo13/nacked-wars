@@ -1,7 +1,27 @@
+@font-face {
+  font-family:"StarJedi";
+  src: url("fonts/StarJedi.woff2") format('woff2');
+}
 body{
   display: flex;
   justify-content: center;
   align-items: center;
   height: 700px;
   flex-direction: column;
+  font-family: "StarJedi";
+  font-size: 14px;
+  background-image: url("../images/starwars.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#start-button{
+  width: 100px;
+  height: 50px;
+  border: 1px solid red;
+  border-radius: 15px;
+  font-family: "StarJedi";
+}
+#score{
+  font-family: "StarJedi";
+  color: yellow;
 }
