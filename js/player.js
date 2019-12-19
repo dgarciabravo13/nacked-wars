@@ -13,6 +13,8 @@ class Player {
     this.board = board;
     this.setListeners();
     this.arrKeys = [];
+    this.sound = new Audio();
+    this.sound.src = 'sounds/bb8.mp3'
   }
   clearBoard() {
    let x = Math.round(this.posX/50)
@@ -35,6 +37,10 @@ class Player {
     );
   }
 
+  scream() {
+    if (this.speed > 25) this.sound.play();
+  }
+
   setListeners() {
     document.addEventListener("keydown", e => {
       this.arrKeys[e.keyCode] = e.keyCode;
@@ -44,6 +50,7 @@ class Player {
         }else {
           this.posY -= this.speed;
           this.speed += this.speedlight;
+          this.scream();
           this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.DOWN] && this.arrKeys[this.keys.SPACE]){
@@ -52,6 +59,7 @@ class Player {
         }else {
           this.posY += this.speed;
           this.speed += this.speedlight;
+          this.scream();
           this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.LEFT] && this.arrKeys[this.keys.SPACE]){
@@ -60,6 +68,7 @@ class Player {
         }else {
           this.posX -= this.speed;
           this.speed += this.speedlight;
+          this.scream();
           this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.RIGHT] && this.arrKeys[this.keys.SPACE]){
@@ -68,6 +77,7 @@ class Player {
         } else {
           this.posX += this.speed;
           this.speed += this.speedlight;
+          this.scream();
           this.clearBoard();
         }
       }else if(this.arrKeys[this.keys.UP]){
