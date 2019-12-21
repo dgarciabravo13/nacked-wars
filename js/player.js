@@ -7,7 +7,7 @@ class Player {
     this.image.src = image;
     this.posX = gameWidth * 0.08 - this.width;
     this.posY = gameHeight * 0.98 - this.height;
-    this.speed = 3;
+    this.speed = 5;
     this.speedlight = 0.5;
     this.keys = keys;
     this.board = board;
@@ -111,7 +111,7 @@ class Player {
       }   
     });
     document.addEventListener("keyup", e => {
-        this.speed = 3;
+        this.speed = 5;
         this.arrKeys = [];
     });
   }
