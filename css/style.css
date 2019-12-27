@@ -13,6 +13,7 @@ body{
   background-image: url("../images/starwars.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: none;
 }
 #start-button{
   width: 100px;
